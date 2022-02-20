@@ -2,10 +2,13 @@ package harbas
 
 import (
 	"fmt"
+	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
+	"time"
 )
 
 const version = "1.0.0"
@@ -17,6 +20,13 @@ type Harbas struct {
 	ErrorLog *log.Logger
 	InfoLog  *log.Logger
 	RootPath string
+	Routes   *chi.Mux
+	config   config
+}
+
+type config struct {
+	port     string
+	renderer string
 }
 
 func (h *Harbas) New(rootPath string) error {
@@ -45,6 +55,13 @@ func (h *Harbas) New(rootPath string) error {
 	h.ErrorLog = errorLog
 	h.Debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
 	h.Version = version
+	h.RootPath = rootPath
+	h.Routes = h.routes().(*chi.Mux)
+	
+	h.config = config{
+		port:     os.Getenv("PORT"),
+		renderer: os.Getenv("RENDERER"),
+	}
 
 	return nil
 }
@@ -58,6 +75,20 @@ func (h *Harbas) Init(p initPaths) error {
 		}
 	}
 	return nil
+}
+
+func (h *Harbas) ListenAndServe() {
+	srv := &http.Server{
+		Addr:         fmt.Sprintf(":%s", os.Getenv("PORT")),
+		ErrorLog:     h.ErrorLog,
+		Handler:      h.routes(),
+		IdleTimeout:  30 * time.Second,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 600 * time.Second,
+	}
+	h.InfoLog.Printf("Listening on port %s", os.Getenv("PORT"))
+	err := srv.ListenAndServe()
+	h.ErrorLog.Fatal(err)
 }
 
 func (h *Harbas) checkDotEnv(path string) error {
