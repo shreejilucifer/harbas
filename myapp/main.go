@@ -1,9 +1,13 @@
 package main
 
-import "github.com/shreejilucifer/harbas"
+import (
+	"github.com/shreejilucifer/harbas"
+	"myapp/handlers"
+)
 
 type application struct {
-	App *harbas.Harbas
+	App      *harbas.Harbas
+	Handlers *handlers.Handlers
 }
 
 func main() {

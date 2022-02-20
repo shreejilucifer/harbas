@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
+	"github.com/shreejilucifer/harbas/render"
 	"log"
 	"net/http"
 	"os"
@@ -21,6 +22,7 @@ type Harbas struct {
 	InfoLog  *log.Logger
 	RootPath string
 	Routes   *chi.Mux
+	Render   *render.Render
 	config   config
 }
 
@@ -57,11 +59,13 @@ func (h *Harbas) New(rootPath string) error {
 	h.Version = version
 	h.RootPath = rootPath
 	h.Routes = h.routes().(*chi.Mux)
-	
+
 	h.config = config{
 		port:     os.Getenv("PORT"),
 		renderer: os.Getenv("RENDERER"),
 	}
+
+	h.createRenderer()
 
 	return nil
 }
@@ -81,7 +85,7 @@ func (h *Harbas) ListenAndServe() {
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%s", os.Getenv("PORT")),
 		ErrorLog:     h.ErrorLog,
-		Handler:      h.routes(),
+		Handler:      h.Routes,
 		IdleTimeout:  30 * time.Second,
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 600 * time.Second,
@@ -107,4 +111,13 @@ func (h *Harbas) startLoggers() (*log.Logger, *log.Logger) {
 	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
 	return infoLog, errorLog
+}
+
+func (h *Harbas) createRenderer() {
+	myRenderer := render.Render{
+		Renderer: h.config.renderer,
+		RootPath: h.RootPath,
+		Port:     h.config.port,
+	}
+	h.Render = &myRenderer
 }

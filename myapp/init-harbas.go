@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/shreejilucifer/harbas"
 	"log"
+	"myapp/handlers"
 	"os"
 )
 
@@ -21,11 +22,16 @@ func initApplication() *application {
 	hbs.AppName = "myapp"
 	hbs.Debug = true
 
-	hbs.InfoLog.Println("Debug is set to", hbs.Debug)
-
-	app := &application{
+	myHandlers := &handlers.Handlers{
 		App: hbs,
 	}
+
+	app := &application{
+		App:      hbs,
+		Handlers: myHandlers,
+	}
+
+	app.App.Routes = app.routes()
 
 	return app
 }
