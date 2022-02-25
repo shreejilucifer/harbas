@@ -1,0 +1,23 @@
+mode: set
+github.com/shreejilucifer/harbas/render/render.go:34.113,35.37 1 1
+github.com/shreejilucifer/harbas/render/render.go:42.2,42.52 1 1
+github.com/shreejilucifer/harbas/render/render.go:36.12,37.38 1 1
+github.com/shreejilucifer/harbas/render/render.go:38.13,39.50 1 1
+github.com/shreejilucifer/harbas/render/render.go:40.10,40.10 0 1
+github.com/shreejilucifer/harbas/render/render.go:45.104,47.16 2 1
+github.com/shreejilucifer/harbas/render/render.go:50.2,51.17 2 1
+github.com/shreejilucifer/harbas/render/render.go:55.2,56.16 2 1
+github.com/shreejilucifer/harbas/render/render.go:60.2,60.12 1 1
+github.com/shreejilucifer/harbas/render/render.go:47.16,49.3 1 1
+github.com/shreejilucifer/harbas/render/render.go:51.17,53.3 1 0
+github.com/shreejilucifer/harbas/render/render.go:56.16,58.3 1 0
+github.com/shreejilucifer/harbas/render/render.go:63.124,66.22 2 1
+github.com/shreejilucifer/harbas/render/render.go:72.2,73.17 2 1
+github.com/shreejilucifer/harbas/render/render.go:77.2,78.16 2 1
+github.com/shreejilucifer/harbas/render/render.go:83.2,83.46 1 1
+github.com/shreejilucifer/harbas/render/render.go:88.2,88.12 1 1
+github.com/shreejilucifer/harbas/render/render.go:66.22,68.3 1 1
+github.com/shreejilucifer/harbas/render/render.go:68.8,70.3 1 0
+github.com/shreejilucifer/harbas/render/render.go:73.17,75.3 1 0
+github.com/shreejilucifer/harbas/render/render.go:78.16,81.3 2 1
+github.com/shreejilucifer/harbas/render/render.go:83.46,86.3 2 0

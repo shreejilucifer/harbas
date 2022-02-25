@@ -1,6 +1,7 @@
 package render
 
 import (
+	"errors"
 	"fmt"
 	"github.com/CloudyKit/jet/v6"
 	"html/template"
@@ -36,8 +37,9 @@ func (r *Render) Page(w http.ResponseWriter, req *http.Request, view string, var
 		return r.GoPage(w, req, view, data)
 	case "jet":
 		return r.JetPage(w, req, view, variables, data)
+	default:
 	}
-	return nil
+	return errors.New("no rendering engine specified")
 }
 
 func (r *Render) GoPage(w http.ResponseWriter, req *http.Request, view string, data interface{}) error {
@@ -82,6 +84,6 @@ func (r *Render) JetPage(w http.ResponseWriter, req *http.Request, templateName 
 		log.Println(err)
 		return err
 	}
-	
+
 	return nil
 }
